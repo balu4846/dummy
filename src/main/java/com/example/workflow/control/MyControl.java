@@ -15,6 +15,8 @@ public class MyControl {
 		ProcessInstantiationBuilder pb = ps.getRuntimeService()
 				.createProcessInstanceByKey("Process_1aowrt8");
 		pb.executeWithVariablesInReturn();
+		
+		System.out.println("hllo word king");
 		return "My KIng is Lord";
 	}
 	
