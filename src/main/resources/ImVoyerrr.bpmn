@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_12cnlwt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Check_vote" name="not Eligibe" isExecutable="true" camunda:historyTimeToLive="30">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0vnfzmz</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vnfzmz" sourceRef="StartEvent_1" targetRef="Activity_0h4nq8u" />
+    <bpmn:userTask id="Activity_0h4nq8u" name="user_vinay">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="Enter name" type="string" />
+          <camunda:formField id="age" label="enter " type="long" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vnfzmz</bpmn:incoming>
+      <bpmn:outgoing>Flow_13ljnlo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1ozlk5w">
+      <bpmn:incoming>Flow_13ljnlo</bpmn:incoming>
+      <bpmn:outgoing>check_Age_Eligebe</bpmn:outgoing>
+      <bpmn:outgoing>Not_eliglebe</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_13ljnlo" sourceRef="Activity_0h4nq8u" targetRef="Gateway_1ozlk5w" />
+    <bpmn:sequenceFlow id="check_Age_Eligebe" name="eligble_Vote" sourceRef="Gateway_1ozlk5w" targetRef="Activity_0kfqcva">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="js">age &gt;= 18</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Not_eliglebe" name="Not Eleigble" sourceRef="Gateway_1ozlk5w" targetRef="Activity_19qmxtx">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="js">age &lt; 18</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Activity_0kfqcva" name="Im eligue to vote">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Acctepted" label="Ok im taking My vote" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>check_Age_Eligebe</bpmn:incoming>
+      <bpmn:outgoing>Flow_01t59wy</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_19qmxtx" name="not elegibe">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="not_accpeted" label="not voter" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Not_eliglebe</bpmn:incoming>
+      <bpmn:outgoing>Flow_1twfe47</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_07y9jl9">
+      <bpmn:incoming>Flow_01t59wy</bpmn:incoming>
+      <bpmn:incoming>Flow_1twfe47</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iplwg6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_01t59wy" sourceRef="Activity_0kfqcva" targetRef="Gateway_07y9jl9" />
+    <bpmn:sequenceFlow id="Flow_1twfe47" sourceRef="Activity_19qmxtx" targetRef="Gateway_07y9jl9" />
+    <bpmn:intermediateThrowEvent id="Event_021iyro">
+      <bpmn:incoming>Flow_0iplwg6</bpmn:incoming>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_0iplwg6" sourceRef="Gateway_07y9jl9" targetRef="Event_021iyro" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Check_vote">
+      <bpmndi:BPMNEdge id="Flow_0vnfzmz_di" bpmnElement="Flow_0vnfzmz">
+        <di:waypoint x="215" y="247" />
+        <di:waypoint x="270" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13ljnlo_di" bpmnElement="Flow_13ljnlo">
+        <di:waypoint x="370" y="247" />
+        <di:waypoint x="425" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jggfr5_di" bpmnElement="check_Age_Eligebe">
+        <di:waypoint x="450" y="222" />
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="530" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="469" y="168" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qr8hai_di" bpmnElement="Not_eliglebe">
+        <di:waypoint x="450" y="272" />
+        <di:waypoint x="450" y="360" />
+        <di:waypoint x="530" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="436" y="313" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01t59wy_di" bpmnElement="Flow_01t59wy">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="790" y="120" />
+        <di:waypoint x="790" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1twfe47_di" bpmnElement="Flow_1twfe47">
+        <di:waypoint x="630" y="360" />
+        <di:waypoint x="790" y="360" />
+        <di:waypoint x="790" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iplwg6_di" bpmnElement="Flow_0iplwg6">
+        <di:waypoint x="815" y="220" />
+        <di:waypoint x="952" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b4eiug_di" bpmnElement="Activity_0h4nq8u">
+        <dc:Bounds x="270" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ozlk5w_di" bpmnElement="Gateway_1ozlk5w" isMarkerVisible="true">
+        <dc:Bounds x="425" y="222" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xg3rnn_di" bpmnElement="Activity_0kfqcva">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04dsqyr_di" bpmnElement="Activity_19qmxtx">
+        <dc:Bounds x="530" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_07y9jl9_di" bpmnElement="Gateway_07y9jl9" isMarkerVisible="true">
+        <dc:Bounds x="765" y="195" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_021iyro_di" bpmnElement="Event_021iyro">
+        <dc:Bounds x="952" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

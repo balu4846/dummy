@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0atsgkk" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <decision id="adult-check" name="Decision 1" camunda:historyTimeToLive="30">
+    <decisionTable id="DecisionTable_1gfsmum">
+      <input id="Input_1" label="age-input" camunda:inputVariable="age">
+        <inputExpression id="InputExpression_1" typeRef="integer" expressionLanguage="feel">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="adult or chlid" typeRef="string" />
+      <rule id="DecisionRule_04d7vjj">
+        <inputEntry id="UnaryTests_0zrbr1f">
+          <text>&lt; 18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09vs5gz">
+          <text>"  3454  345345 "</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0632dgx">
+        <inputEntry id="UnaryTests_02vkr8g">
+          <text>&gt; 18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lar1lx">
+          <text>" 34843 834585784 "</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="adult-check">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1qgl3rr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="leavemangae" isExecutable="true" camunda:historyTimeToLive="30">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1oht0dm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_10bjkr1" name="check balnce" camunda:class="com.example.workflow.UserServies">
+      <bpmn:incoming>Flow_1oht0dm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tcyjfb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_01ccade">
+      <bpmn:incoming>Flow_1u8z3ow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1oht0dm" sourceRef="StartEvent_1" targetRef="Activity_10bjkr1" />
+    <bpmn:sequenceFlow id="Flow_0tcyjfb" sourceRef="Activity_10bjkr1" targetRef="Activity_1p14loy" />
+    <bpmn:sequenceFlow id="Flow_1u8z3ow" sourceRef="Activity_0lx570w" targetRef="Event_01ccade" />
+    <bpmn:userTask id="Activity_0lx570w" name="hr" camunda:assignee="hr">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="userapproval" label="approval" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1o14hl9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u8z3ow</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1p14loy" name="manger" camunda:assignee="mg">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="approval" label="mag_appro" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tcyjfb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o14hl9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1o14hl9" sourceRef="Activity_1p14loy" targetRef="Activity_0lx570w" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="leavemangae">
+      <bpmndi:BPMNEdge id="Flow_1oht0dm_di" bpmnElement="Flow_1oht0dm">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="280" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tcyjfb_di" bpmnElement="Flow_0tcyjfb">
+        <di:waypoint x="380" y="117" />
+        <di:waypoint x="450" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o14hl9_di" bpmnElement="Flow_1o14hl9">
+        <di:waypoint x="550" y="117" />
+        <di:waypoint x="610" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u8z3ow_di" bpmnElement="Flow_1u8z3ow">
+        <di:waypoint x="710" y="117" />
+        <di:waypoint x="772" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h9w34i_di" bpmnElement="Activity_10bjkr1">
+        <dc:Bounds x="280" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01ccade_di" bpmnElement="Event_01ccade">
+        <dc:Bounds x="772" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ibazez_di" bpmnElement="Activity_1p14loy">
+        <dc:Bounds x="450" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mj9odd_di" bpmnElement="Activity_0lx570w">
+        <dc:Bounds x="610" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

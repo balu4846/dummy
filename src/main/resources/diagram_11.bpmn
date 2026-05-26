@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0dgvxnv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_1u0999d" isExecutable="true" camunda:historyTimeToLive="30">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1uqhxhu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1uqhxhu" sourceRef="StartEvent_1" targetRef="serices_task" />
+    <bpmn:serviceTask id="serices_task" name="Welcome" camunda:class="com.example.workflow.UserserivcesTask">
+      <bpmn:incoming>Flow_1uqhxhu</bpmn:incoming>
+      <bpmn:outgoing>Flow_07e12da</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_07e12da" sourceRef="serices_task" targetRef="Use_task" />
+    <bpmn:userTask id="Use_task" name="Vinay">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="age" label="enter age" type="long" />
+        </camunda:formData>
+        <camunda:executionListener class="com.example.workflow.listener.StartServices" event="start" />
+        <camunda:taskListener class="com.example.workflow.listener.CompleteList" event="complete" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07e12da</bpmn:incoming>
+      <bpmn:outgoing>Flow_1id8490</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1id8490" sourceRef="Use_task" targetRef="send-Task" />
+    <bpmn:sendTask id="send-Task" name="send_task" camunda:class="com.example.workflow.UserSendTask">
+      <bpmn:incoming>Flow_1id8490</bpmn:incoming>
+      <bpmn:outgoing>Flow_192iki1</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_192iki1" sourceRef="send-Task" targetRef="check_age" />
+    <bpmn:scriptTask id="check_age" name="chakecahe " scriptFormat="js" camunda:resultVariable="output">
+      <bpmn:incoming>Flow_192iki1</bpmn:incoming>
+      <bpmn:outgoing>Flow_18p74uz</bpmn:outgoing>
+      <bpmn:script>var age = Number(execution.getVariable("age"));
+var result = age &lt; 18 ? "minor" : "adult";
+execution.setVariable("output", result); // store explicitly
+result;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_18p74uz" sourceRef="check_age" targetRef="get_Aswer" />
+    <bpmn:serviceTask id="get_Aswer" name="Asaeerre" camunda:class="com.example.workflow.getDataCsll">
+      <bpmn:incoming>Flow_18p74uz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gaga3f</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="bussines_logic" name="bussiness logic" camunda:resultVariable="adult-chlid" camunda:decisionRef="adult-check" camunda:mapDecisionResult="singleEntry">
+      <bpmn:incoming>Flow_0gaga3f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d4uv49</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_0gaga3f" sourceRef="get_Aswer" targetRef="bussines_logic" />
+    <bpmn:sequenceFlow id="Flow_1d4uv49" sourceRef="bussines_logic" targetRef="recive_task" />
+    <bpmn:intermediateThrowEvent id="Event_1wgmubd">
+      <bpmn:incoming>Flow_05rzv81</bpmn:incoming>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_05rzv81" sourceRef="recive_task" targetRef="Event_1wgmubd" />
+    <bpmn:receiveTask id="recive_task" name="recive_task" messageRef="Message_1n6boj3">
+      <bpmn:incoming>Flow_1d4uv49</bpmn:incoming>
+      <bpmn:outgoing>Flow_05rzv81</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:boundaryEvent id="check_time_limter" name="TimeLimet" attachedToRef="recive_task">
+      <bpmn:outgoing>Flow_1t84s05</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1ua4l6s">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT60M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1t84s05" sourceRef="check_time_limter" targetRef="timeUseTask" />
+    <bpmn:userTask id="timeUseTask" name="UserTaskTimer">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="isDone" label="Is check Data" type="boolean" defaultValue="false" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1t84s05</bpmn:incoming>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1n6boj3" name="isDone" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1u0999d">
+      <bpmndi:BPMNEdge id="Flow_18p74uz_di" bpmnElement="Flow_18p74uz">
+        <di:waypoint x="690" y="117" />
+        <di:waypoint x="720" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_192iki1_di" bpmnElement="Flow_192iki1">
+        <di:waypoint x="560" y="117" />
+        <di:waypoint x="590" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1id8490_di" bpmnElement="Flow_1id8490">
+        <di:waypoint x="430" y="117" />
+        <di:waypoint x="460" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07e12da_di" bpmnElement="Flow_07e12da">
+        <di:waypoint x="300" y="117" />
+        <di:waypoint x="330" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uqhxhu_di" bpmnElement="Flow_1uqhxhu">
+        <di:waypoint x="168" y="117" />
+        <di:waypoint x="200" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gaga3f_di" bpmnElement="Flow_0gaga3f">
+        <di:waypoint x="820" y="117" />
+        <di:waypoint x="840" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d4uv49_di" bpmnElement="Flow_1d4uv49">
+        <di:waypoint x="940" y="117" />
+        <di:waypoint x="960" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05rzv81_di" bpmnElement="Flow_05rzv81">
+        <di:waypoint x="1060" y="117" />
+        <di:waypoint x="1082" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t84s05_di" bpmnElement="Flow_1t84s05">
+        <di:waypoint x="1010" y="175" />
+        <di:waypoint x="1010" y="208" />
+        <di:waypoint x="1030" y="208" />
+        <di:waypoint x="1030" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="132" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i58e6t_di" bpmnElement="serices_task">
+        <dc:Bounds x="200" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_044jrrx_di" bpmnElement="Use_task">
+        <dc:Bounds x="330" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z40hgf_di" bpmnElement="send-Task">
+        <dc:Bounds x="460" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hj084x_di" bpmnElement="check_age">
+        <dc:Bounds x="590" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11v3951_di" bpmnElement="get_Aswer">
+        <dc:Bounds x="720" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08nbs93_di" bpmnElement="bussines_logic">
+        <dc:Bounds x="840" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wgmubd_di" bpmnElement="Event_1wgmubd">
+        <dc:Bounds x="1082" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ltwdy6_di" bpmnElement="recive_task">
+        <dc:Bounds x="960" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hvz78j_di" bpmnElement="timeUseTask">
+        <dc:Bounds x="980" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qjzdac_di" bpmnElement="check_time_limter">
+        <dc:Bounds x="992" y="139" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="985" y="182" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

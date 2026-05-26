@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1qqadjs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_1aowrt8" isExecutable="true" camunda:historyTimeToLive="30">
+    <bpmn:startEvent id="Event_0sq8q22">
+      <bpmn:outgoing>Flow_0snvjxj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0snvjxj" sourceRef="Event_0sq8q22" targetRef="Activity_1noj17n" />
+    <bpmn:endEvent id="Event_1bs9a3w">
+      <bpmn:incoming>Flow_05qogp4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_05qogp4" sourceRef="Activity_1noj17n" targetRef="Event_1bs9a3w" />
+    <bpmn:scriptTask id="Activity_1noj17n" name="print" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0snvjxj</bpmn:incoming>
+      <bpmn:outgoing>Flow_05qogp4</bpmn:outgoing>
+      <bpmn:script>print('hello word');</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1aowrt8">
+      <bpmndi:BPMNEdge id="Flow_0snvjxj_di" bpmnElement="Flow_0snvjxj">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="280" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05qogp4_di" bpmnElement="Flow_05qogp4">
+        <di:waypoint x="380" y="120" />
+        <di:waypoint x="482" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0sq8q22_di" bpmnElement="Event_0sq8q22">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bs9a3w_di" bpmnElement="Event_1bs9a3w">
+        <dc:Bounds x="482" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w2wr9m_di" bpmnElement="Activity_1noj17n">
+        <dc:Bounds x="280" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
